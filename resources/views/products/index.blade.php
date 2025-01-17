@@ -1,5 +1,15 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        @if(session('success'))
+        <div class="alert alert-success mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Sukses!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+            <button type="button" class="absolute top-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+                <span class="text-green-500">&times;</span>
+            </button>
+        </div>
+    @endif
+    
     <div class="mt-48 px-2 flex justify-between">
         <h1 class="font-semibold text-5xl font-inter">
           Lengkapi dan bangun pc <br />
@@ -124,20 +134,33 @@
     {{-- List Product --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-28 mb-28">
         <h1 class="text-4xl font-inter font-semibold">Mau nyari apa?</h1>
+        <div class="justify-between flex">
         <p class="text-xl">Berikut list produk yang kami jual di toko kami!</p>
+        <a href="{{ route('products.create') }}"><button class="bg-gray-100 px-10 py-2 rounded-lg  font-semibold">Tambah</button></a>
+        </div>
 
-        <div class="grid md:grid-cols-3 sm:grid-cols-1 mt-4 gap-5 px-4 ">
+        {{-- Card Produk --}}
+        <div class="grid md:grid-cols-3 mt-4 gap-5 sm:grid-cols-1">
             @foreach ($products as $product)
                 <div class="mt-2">
-                    <img src="{{ url('storage/' . $product->gambar) }}" alt="">
+                    <img class="w-96 h-96 object-cover rounded-xl" src="{{ url('storage/' . $product->gambar) }}" alt="">
                     <div class="mt-2">
                       <p class="text-xl font-light">{{ $product->name }}</p>
                       <p class="font-semibold text-gray-400">Rp. {{ number_format($product->harga) }}</p>
                     </div>
+                    <a href="{{ route('products.edit' , $product) }}">
+                    <button class="bg-gray-100 px-10 py-2 rounded-lg mt-2 w-full font-semibold">Edit</button>
+                    </a>
                 </div>
             @endforeach
         </div>
+
+        {{-- Pagination --}}
+        <div class="mt-4">
+          {{ $products->links() }}
+        </div>
     </div>
+
 <script>
   function carousel() {
     return {
