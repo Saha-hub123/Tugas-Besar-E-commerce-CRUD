@@ -3,18 +3,21 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('user');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 
-    route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    route::get('/user', [UserController::class, 'User'])->name('user');
+    route::get('/user/{product}/beli', [UserController::class, 'beli'])->name('beli');
+    route::get('/admin', [ProductController::class, 'index'])->name('products.index');
     route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     route::post('/products', [ProductController::class, 'store'])->name('products.store');
     route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
