@@ -136,7 +136,7 @@
         <h1 class="text-4xl font-inter font-semibold">Mau nyari apa?</h1>
         <div class="justify-between flex">
         <p class="text-xl">Berikut list produk yang kami jual di toko kami!</p>
-        <a href="{{ route('products.create') }}"><button class="bg-gray-100 px-10 py-2 rounded-lg  font-semibold">Tambah</button></a>
+        
         </div>
 
         {{-- Card Produk --}}

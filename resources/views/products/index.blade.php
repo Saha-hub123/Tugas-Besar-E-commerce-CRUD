@@ -50,9 +50,9 @@
     
     {{-- List Product --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-28 mb-28">
-        <h1 class="text-4xl font-inter font-semibold">Mau nyari apa?</h1>
+        <h1 class="text-4xl font-inter font-semibold">Admin Panel</h1>
         <div class="justify-between flex">
-        <p class="text-xl">Berikut list produk yang kami jual di toko kami!</p>
+        <p class="text-xl">Halaman list product dan <span class="font-bold">CRUD</span> Edit Produk, Tambah dan Hapus</p>
         <a href="{{ route('products.create') }}"><button class="bg-gray-100 px-10 py-2 rounded-lg  font-semibold">Tambah</button></a>
         </div>
 
