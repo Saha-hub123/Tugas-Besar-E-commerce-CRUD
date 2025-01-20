@@ -28,6 +28,7 @@ class ProductController extends Controller
             'harga' => 'required|numeric',
             'deskripsi' => 'required|string',
             'gambar' => 'required|image|mimes:jpeg,png,jpg',
+            'detail' => 'required|string',
         ]);
 
         $gambar = $request->file('gambar');
@@ -37,7 +38,8 @@ class ProductController extends Controller
         'name' => $request->name,
         'harga' => $request->harga,
         'deskripsi' => $request->deskripsi,
-        'gambar' => $gambar->hashName()
+        'gambar' => $gambar->hashName(),
+        'detail' => $request->detail,
        ]);
 
        return redirect()->route('products.index')->with('success', 'Produk Berhasil Ditambahkan!');
@@ -55,11 +57,13 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'deskripsi' => 'required|string',
+            'detail' => 'required|string',
         ]);
 
         $product->name = $request->name;
         $product->harga = $request->harga;
         $product->deskripsi = $request->deskripsi;
+        $product->detail = $request->detail;
 
         if($request->file('gambar'))
         {
@@ -88,6 +92,19 @@ class ProductController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
-    
-    
+
+    public function search(Request $request)
+    {
+        // Ambil query pencarian dari input pengguna
+        $query = $request->input('query');
+
+        // Cari produk berdasarkan nama atau deskripsi
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('deskripsi', 'LIKE', "%{$query}%")
+            ->get();
+
+        // Tampilkan hasil ke view
+        return view('products.search-results', compact('products', 'query'));
+    }
+       
 }

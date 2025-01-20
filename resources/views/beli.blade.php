@@ -15,6 +15,7 @@
         <h2 class="text-3xl font-bold text-gray-800" id="name" name="name" required>{{$products->name}}</h2>
         <p class="text-gray-600 mt-4" id="deskripsi" name="deskripsi" required>{{$products->deskripsi}}</p>
         <p class="text-gray-800 text-2xl font-bold mt-6" id="harga" name="harga" required>Rp. {{$products->harga}}</p>
+        <p class="text-gray-600 mt-4" id="detail" name="detail" required>{{$products->detail}}</p>
         <div class="mt-6">
           <button class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-2xl hover:bg-blue-600 focus:outline-none">Tambahkan ke Keranjang</button>
         </div>

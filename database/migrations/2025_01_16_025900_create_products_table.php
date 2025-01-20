@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('deskripsi')->nullable();
             $table->string('gambar')->default('noimage.png');
             $table->timestamps();
+            $table->string('detail');
         });
     }
 

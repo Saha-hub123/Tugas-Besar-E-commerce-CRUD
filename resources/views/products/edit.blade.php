@@ -52,6 +52,13 @@
                                         <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                                     </div>
 
+                                    <!-- Detail -->
+                                    <div class="mt-4">
+                                        <x-input-label for="detail" :value="__('Detail Produk')" />
+                                        <textarea id="detail" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" name="detail" required>{{ $product->detail }}</textarea>
+                                        <x-input-error :messages="$errors->get('detail')" class="mt-2" />
+                                    </div>
+
                                     <!-- Tombol Submit -->
                                     <x-primary-button class="justify-center w-full mt-4 bg-indigo-600">
                                         {{ __('Submit') }}
