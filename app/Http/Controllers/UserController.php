@@ -14,6 +14,15 @@ class UserController extends Controller
             return view('user', compact('products'));
         }
     }
+
+    public function dashboard(){
+        {
+            $products = Product::paginate(12);
+    
+            return view('dashboard', compact('products'));
+        }
+    }
+
     public function beli($id)
         {   
             $products = product::where( "id", $id)->first();
