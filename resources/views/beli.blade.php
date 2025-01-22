@@ -1,12 +1,12 @@
 <x-app-layout>
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-28 mt-8">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-28 mt-32">
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Gambar Produk -->
       <div class="flex justify-center">
         <img
           src="{{ url('storage/' . $products->gambar) }}"
           alt="Gambar Produk"
-          class="w-full max-w-[460px] h-auto object-cover rounded-2xl shadow-lg"
+          class=" w-[460px] h-[460px] object-cover rounded-xl shadow-xl"
           id="gambar"
           name="gambar"
           required
@@ -15,33 +15,23 @@
 
       <!-- Detail Produk -->
       <div class="flex-1">
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4" id="name" name="name" required>
+        <h1 class="text-6xl font-bold text-gray-800" id="name" name="name" required>
           {{ $products->name }}
-        </h2>
-        <p class="text-gray-600 mb-4" id="deskripsi" name="deskripsi" required>
-          {{ $products->deskripsi }}
-        </p>
-        <p class="text-gray-800 text-xl sm:text-2xl font-bold mb-6" id="harga" name="harga" required>
+        </h1>
+        <h1 class="text-xl font-semibold mt-4">Mulai Dari</h1>
+        <p class="text-gray-800 text-xl sm:text-2xl font-bold" id="harga" name="harga" required>
           Rp. {{ number_format($products->harga) }}
         </p>
-        <p class="text-gray-600 mb-6" id="detail" name="detail" required>
-          {{ $products->detail }}
-        </p>
-        <div class="mb-8">
-          <button
-            class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 focus:outline-none"
-          >
-            Tambahkan ke Keranjang
-          </button>
+        <div class="mb-2">
         </div>
-        <div>
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Detail Produk:</h3>
-          <ul class="list-disc list-inside text-gray-600 mt-2">
-            <li>Fitur Utama 1</li>
-            <li>Fitur Utama 2</li>
-            <li>Fitur Utama 3</li>
-          </ul>
+        <div class="w-3/4">
+          <p>{{ $products->deskripsi}}</p>
+          <h1 class="text-lg sm:text-2xl font-semibold text-gray-800 mt-8">Detail Produk</h1>
+          <h1 class="">{{ $products->detail }}</h1>
         </div>
+        <button class="w-2/4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg mt-4 font-semibold">
+          Buy Now
+      </button>
       </div>
     </div>
 
