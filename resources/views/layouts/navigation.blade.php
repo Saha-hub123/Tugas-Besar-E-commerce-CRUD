@@ -19,9 +19,6 @@
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.kategori', ['kategori' => 'Semua'])" :active="request()->routeIs('user.kategori')">
-                        {{ __('Products') }}
-                    </x-nav-link>
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <div class="relative">
 
@@ -68,7 +65,7 @@
                 <svg class="w-6 h-6 text-gray-400 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2.65-5.65a8 8 0 11-16 0 8 8 0 0116 0z" />
                   </svg>
-                <input class="px-32 text-center border-none bg-transparent" type="text" name="query" placeholder="Cari produk..." required>
+                <input class="px-28 text-center border-none bg-transparent" type="text" name="query" placeholder="Cari produk..." required>
             </div>
             </form>
             <!-- search end-->

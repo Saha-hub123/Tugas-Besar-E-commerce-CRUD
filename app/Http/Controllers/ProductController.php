@@ -38,7 +38,7 @@ class ProductController extends Controller
             'deskripsi' => 'required|string',
             'gambar' => 'required|image|mimes:jpeg,png,jpg',
             'detail' => 'required|string',
-            'kategori' => 'required|string|in:ram,motherboard,processor',
+            'kategori' => 'required|string|in:processor,ram,motheboard,cooler,psu,vga',
         ]);
 
         $gambar = $request->file('gambar');
@@ -70,7 +70,7 @@ class ProductController extends Controller
                 'harga' => 'required|numeric',
                 'deskripsi' => 'required|string',
                 'detail' => 'required|string',
-                'kategori' => 'required|string|in:ram,motherboard,processor',
+                'kategori' => 'required|string|in:processor,ram,motheboard,cooler,psu,vga',
             ]);
         
             // Update the product with the validated data
