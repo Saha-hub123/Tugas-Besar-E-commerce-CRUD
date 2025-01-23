@@ -89,18 +89,35 @@
                   class="w-full h-60 object-cover md:w-96 md:h-96 lg:w-96 lg:h-96"
                   src="{{ url('storage/' . $product->gambar) }}"
                   alt="{{ $product->name }}"
-              />        
-                    <div class="p-4">
-                        <p class="text-lg font-medium">{{ $product->name }}</p>
-                        <p class="text-gray-500 font-semibold mt-1">Rp. {{ number_format($product->harga) }}</p>
-                        <a href="{{ route('beli', $product) }}">
-                            <button
-                                class="w-full bg-indigo-600 hover:bg-indigo-800 text-white px-6 py-2 rounded-lg mt-4 font-semibold"
-                            >
+              /> 
+
+                <div class="p-4">
+                    <p class="text-lg font-medium">{{ $product->name }}</p>
+                    <p class="text-gray-500 font-semibold mt-1">Rp. {{ number_format($product->harga) }}</p>
+
+                    <!-- Container untuk Tombol -->
+                    <div class="flex space-x-2 mt-4">
+                        <!-- Tombol "Buy Now" -->
+                        <a href="{{ route('beli', $product) }}" class="w-4/5">
+                            <button class="w-full bg-indigo-600 hover:bg-indigo-800 text-white px-6 py-2 rounded-lg font-semibold">
                                 Buy Now
                             </button>
                         </a>
+
+                        <!-- Tombol "Keranjang" -->
+                        <form action="{{ route('addToCart', $product->id) }}" method="POST" class="w-1/5">
+                            @csrf
+                            <button type="submit" class="w-full bg-white border border-gray-600 hover:bg-gray-300  px-4 py-2 rounded-lg font-semibold flex items-center justify-center">
+                                <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" 
+                                    class="block h-6 w-auto" 
+                                    alt="Keranjang">
+                            </button>
+                        </form>
+
                     </div>
+                </div>
+
+
                 </div>
                 @endforeach
             </div>

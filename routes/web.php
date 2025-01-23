@@ -25,6 +25,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/search', [UserController::class, 'search'])->name('products.search');
     Route::get('/kategori/{kategori}', [UserController::class, 'kategori'])->name('user.kategori');
+    Route::get('/checkout', [UserController::class, 'checkout'])->name('user.checkout');
+
+    Route::post('/addtocart/{id}', [UserController::class, 'addToCart'])->name('addToCart');
+    Route::delete('/cart/remove/{id}', [UserController::class, 'removeFromCart'])->name('removeFromCart');
+    Route::post('/checkout/process', [UserController::class, 'processCheckout'])->name('processCheckout');
+
     
 
 
