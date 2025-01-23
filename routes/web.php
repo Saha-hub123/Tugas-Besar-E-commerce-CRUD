@@ -23,8 +23,8 @@ Route::middleware('auth')->group(function () {
     route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-    Route::get('/search', [ProductController::class, 'search'])->name('products.search');
-    Route::get('/kategori/{kategori}', [ProductController::class, 'kategori'])->name('user.kategori');
+    Route::get('/search', [UserController::class, 'search'])->name('products.search');
+    Route::get('/kategori/{kategori}', [UserController::class, 'kategori'])->name('user.kategori');
     
 
 
