@@ -17,6 +17,9 @@
                         {{ __('Dashboard') }}
                     </x-nav-link> -->
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.kategori', ['kategori' => 'Semua'])" :active="request()->routeIs('kategori')">
                         {{ __('Products') }}
                     </x-nav-link>
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -33,6 +36,10 @@
         <a href="{{ route('user.kategori', ['kategori' => 'motherboard']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Motherboard</a>
         <a href="{{ route('user.kategori', ['kategori' => 'ram']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Ram</a>
         <a href="{{ route('user.kategori', ['kategori' => 'processor']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Prossesor</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'vga']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Graphic Card</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'psu']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Power Supply</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'casing']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Case</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'cooler']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Cooler</a>
     </div>
   </div>
   <script>

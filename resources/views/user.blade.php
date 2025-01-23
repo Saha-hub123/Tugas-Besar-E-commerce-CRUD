@@ -75,10 +75,170 @@
                 </div>
             </div>
         </div>
-        
+
+        {{-- Kategori --}}
+        <div class="mt-24">
+            <h1 class="text-4xl font-semibold">Kategori Produk</h1>
+            <p class="text-lg">Berikut beberapa kategori produk yang kami jual!</p> 
+            <div class="flex">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Card 1 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'motherboard']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/mobo.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">Motherboard</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- Card 2 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'vga']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/vga.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">Graphic Card</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- Card 3 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'psu']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/psu.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">Power Supply</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- Card 4 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'ram']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/ram.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">Ram</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- Card 5 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'processor']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/processor.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">Processor</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- Card 6 -->
+                <a href="{{ route('user.kategori', ['kategori' => 'cooler']) }}" class="group relative block bg-black rounded-xl">
+                  <img
+                    alt=""
+                    src="{{ url('storage/cpucooler.png') }}"
+                    class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50 rounded-xl"
+                  />
+              
+                  <div class="relative p-4 sm:p-6 lg:p-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">Kategori</p>
+              
+                    <p class="text-xl font-bold text-white sm:text-2xl">CPU Cooler</p>
+              
+                    <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div
+                        class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p class="text-sm text-white">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
+                          quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+
+              </div>              
+            </div>
+        </div>
 
         <!-- Product List Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="max-w-7xl mx-auto mt-16">
             <h1 class="text-3xl sm:text-4xl font-semibold">Mau nyari apa?</h1>
             <p class="text-lg mb-8">Berikut list produk yang kami jual di toko kami!</p>
 
