@@ -19,9 +19,6 @@
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.kategori', ['kategori' => 'Semua'])" :active="request()->routeIs('kategori')">
-                        {{ __('Products') }}
-                    </x-nav-link>
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <div class="relative">
 
