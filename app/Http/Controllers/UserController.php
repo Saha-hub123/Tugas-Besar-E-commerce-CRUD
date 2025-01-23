@@ -4,162 +4,158 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function user(){
-        {
-            $products = Product::paginate(12);
-    
-            return view('user', compact('products'));
-        }
+    // Halaman utama untuk menampilkan produk
+    public function user()
+    {
+        $products = Product::paginate(12);
+        return view('user', compact('products'));
     }
 
-    public function dashboard(){
-        {
-            $products = Product::paginate(12);
-    
-            return view('dashboard', compact('products'));
-        }
+    // Dashboard admin (opsional)
+    public function dashboard()
+    {
+        $products = Product::paginate(12);
+        return view('dashboard', compact('products'));
     }
 
+    // Detail produk (halaman pembelian)
     public function beli($id)
-        {   
-            $products = product::where( "id", $id)->first();
-            return view('beli', compact('products'));
-        } 
+    {
+        $products = Product::find($id);
 
+        if (!$products) {
+            return redirect()->route('user')->with('error', 'Produk tidak ditemukan.');
+        }
+
+        return view('beli', compact('products'));
+    }
+
+    // Pencarian produk
     public function search(Request $request)
-        {
-            // Ambil query pencarian dari input pengguna
-            $query = $request->input('query');
-    
-            // Cari produk berdasarkan nama atau deskripsi
-            $products = Product::where('name', 'LIKE', "%{$query}%")
-                ->orWhere('deskripsi', 'LIKE', "%{$query}%")
-                ->get();
-    
-            // Tampilkan hasil ke view
-            return view('products.search-results', compact('products', 'query'));
-        }
-        
+    {
+        $query = $request->input('query');
+
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('deskripsi', 'LIKE', "%{$query}%")
+            ->get();
+
+        return view('products.search-results', compact('products', 'query'));
+    }
+
+    // Produk berdasarkan kategori
     public function kategori($kategori)
-        {
-            $products = Product::where( "kategori", $kategori)->get();
-            //dd($products);
-            return view('products.kategori', compact('products'));
-        } 
-    
+    {
+        $products = Product::where('kategori', $kategori)->get();
+        return view('products.kategori', compact('products'));
+    }
+
+    // Tambah produk ke keranjang
     public function addToCart($id)
-        {
-            // Periksa apakah pengguna sudah login
-            // if (!Auth::check()) {
-            //     return redirect()->route('login')->with('message', 'Silakan login untuk menambahkan produk ke keranjang.');
-            // }
-    
-            // Cari produk berdasarkan ID
-            $product = Product::find($id);
-    
-            if (!$product) {
-                return redirect()->back()->with('error', 'Produk tidak ditemukan!');
-            }
-    
-            // Ambil keranjang dari session atau buat array kosong jika belum ada
-            $cart = session()->get('cart', []);
-    
-            // Jika produk sudah ada di keranjang, tambahkan jumlahnya
-            if (isset($cart[$id])) {
-                $cart[$id]['quantity']++;
-            } else {
-                // Jika produk belum ada di keranjang, tambahkan dengan quantity 1
-                $cart[$id] = [
-                    'nama_produk' => $product->nama_produk,
-                    'harga' => $product->harga,
-                    'gambar' => $product->gambar,
-                    'quantity' => 1, // Tambahkan key quantity
-                ];
-            }
-            // Simpan kembali keranjang ke session
-            session()->put('cart', $cart);
-            // Tambahkan pesan flash untuk sukses
-            session()->flash('success', 'Produk berhasil ditambahkan ke keranjang.');
-            // Arahkan kembali ke halaman sebelumnya
-            return redirect()->back();
+    {
+        // Cari produk berdasarkan ID
+        $product = Product::find($id);
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan!');
         }
 
+        // Ambil keranjang dari session atau buat array kosong jika belum ada
+        $cart = session()->get('cart', []);
+
+        // Jika produk sudah ada di keranjang, tambahkan jumlahnya
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            // Jika produk belum ada di keranjang, tambahkan dengan quantity 1
+            $cart[$id] = [
+                'nama_produk' => $product->name, // Gunakan 'name' sesuai dengan database
+                'harga' => $product->harga,
+                'gambar' => $product->gambar,
+                'quantity' => 1,
+            ];
+        }
+
+        // Simpan kembali keranjang ke session
+        session()->put('cart', $cart);
+
+        // Tambahkan pesan flash untuk sukses
+        session()->flash('success', 'Produk berhasil ditambahkan ke keranjang.');
+        return redirect()->back();
+    }
+
+    // Hapus produk dari keranjang
     public function removeFromCart($id)
-        {
-            // Cek apakah ada produk dalam keranjang
-            if (session()->has('cart')) {
-                $cart = session('cart');
-                
-                // Hapus produk dari keranjang
-                if (isset($cart[$id])) {
-                    unset($cart[$id]);
-                    session()->put('cart', $cart);
-                    return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang');
-                }
+    {
+        if (session()->has('cart')) {
+            $cart = session('cart');
+
+            if (isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+                return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang.');
             }
-            
-            return redirect()->back()->with('error', 'Produk tidak ditemukan dalam keranjang');
         }
 
-    
-        public function processCheckout(Request $request)
-        {
-            // Validasi input pengisian formulir
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'phone' => 'required|string|max:15',
-                'address' => 'required|string|max:1000',
-            ]);
-        
-            // Ambil produk yang dipilih dari keranjang
-            $selectedProducts = $request->input('selected_products');
-        
-            if (!$selectedProducts) {
-                return redirect()->route('checkout')->with('error', 'Tidak ada produk yang dipilih!');
-            }
-        
-            $cart = session('cart');
-            $checkoutProducts = [];
-        
-            // Simpan produk yang dipilih
-            foreach ($selectedProducts as $productId) {
-                if (isset($cart[$productId])) {
-                    $checkoutProducts[$productId] = $cart[$productId];
-        
-                    // Tandai produk sebagai sudah dibeli di sesi
-                    session(['purchased_product_' . $productId => true]);
-                    session(['purchase_date_' . $productId => now()->format('Y-m-d H:i:s')]);
-                }
-            }
-        
-            // Hapus produk yang dibeli dari keranjang
-            foreach ($checkoutProducts as $productId => $product) {
-                unset($cart[$productId]);
-            }
-        
-            // Perbarui sesi keranjang dengan produk yang tersisa
-            session(['cart' => $cart]);
-        
-            // Simpan informasi pengiriman dan pembayaran (misalnya ke database) jika perlu
-            // Anda bisa menyimpan data seperti $validatedData['name'], $validatedData['email'], dsb.
-        
-            // Redirect ke halaman histori (atau halaman sukses)
-            return redirect()->route('history')->with('success', 'Pembayaran berhasil! Produk yang dibeli dapat dilihat di histori.');
+        return redirect()->back()->with('error', 'Produk tidak ditemukan dalam keranjang.');
+    }
+
+    // Proses checkout dan arahkan ke WhatsApp
+    public function processCheckout(Request $request)
+    {
+        // Validasi input form
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:1000',
+        ]);
+
+        // Ambil keranjang dari session
+        $cart = session('cart');
+
+        if (!$cart || count($cart) === 0) {
+            return redirect()->route('user.checkout')->with('error', 'Keranjang kosong!');
         }
-        
+
+        // Buat pesan untuk WhatsApp
+        $message = "*Checkout Pesanan*\n\n";
+        $message .= "*Nama*: " . $validatedData['name'] . "\n";
+        $message .= "*Email*: " . $validatedData['email'] . "\n";
+        $message .= "*Nomor Telepon*: " . $validatedData['phone'] . "\n";
+        $message .= "*Alamat*: " . $validatedData['address'] . "\n\n";
+
+        $message .= "*Detail Produk:*\n";
+
+        $totalHarga = 0;
+
+        foreach ($cart as $item) {
+            $message .= "- " . $item['nama_produk'] . " (x" . $item['quantity'] . ") - Rp. " . number_format($item['harga'] * $item['quantity'], 2, ',', '.') . "\n";
+            $totalHarga += $item['harga'] * $item['quantity'];
+        }
+
+        $message .= "\n*Total Harga*: Rp. " . number_format($totalHarga, 2, ',', '.');
+
+        // Kosongkan keranjang
+        session()->forget('cart');
+
+        // Encode pesan ke URL format
+        $whatsappNumber = '6285158354600'; // Ganti dengan nomor WhatsApp tujuan
+        $whatsappLink = "https://wa.me/$whatsappNumber?text=" . urlencode($message);
+
+        // Redirect ke WhatsApp
+        return redirect($whatsappLink);
+    }
+
+    // Menampilkan halaman checkout
     public function checkout()
-        {
-            // Cek apakah ada keranjang belanja
-            if (!session()->has('cart') || count(session('cart')) == 0) {
-                return redirect()->route('index')->with('error', 'Keranjang kosong!');
-            }
-    
-            // Kirimkan data keranjang ke view checkout
-            return view('checkout');
+    {
+        if (!session()->has('cart') || count(session('cart')) == 0) {
+            return redirect()->route('user')->with('error', 'Keranjang kosong!');
         }
+
+        return view('checkout');
+    }
 }

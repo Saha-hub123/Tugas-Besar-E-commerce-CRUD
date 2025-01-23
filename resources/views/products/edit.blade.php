@@ -53,9 +53,12 @@
                     <div class="mt-4">
                         <x-input-label for="kategori" :value="__('Kategori')" />
                         <select id="kategori" name="kategori" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>
+                            <option value="processor" {{ $product->kategori == 'processor' ? 'selected' : '' }}>Processor</option>
                             <option value="ram" {{ $product->kategori == 'ram' ? 'selected' : '' }}>RAM</option>
                             <option value="motherboard" {{ $product->kategori == 'motherboard' ? 'selected' : '' }}>Motherboard</option>
-                            <option value="processor" {{ $product->kategori == 'processor' ? 'selected' : '' }}>Processor</option>
+                            <option value="cooler" {{ $product->kategori == 'cooler' ? 'selected' : '' }}>Cooler</option>
+                            <option value="psu" {{ $product->kategori == 'psu' ? 'selected' : '' }}>Power Supply</option>
+                            <option value="vga" {{ $product->kategori == 'vga' ? 'selected' : '' }}>Graphic Card</option>
                         </select>
                         <x-input-error :messages="$errors->get('kategori')" class="mt-2" />
                     </div>
