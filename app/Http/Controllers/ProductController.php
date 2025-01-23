@@ -38,7 +38,7 @@ class ProductController extends Controller
             'deskripsi' => 'required|string',
             'gambar' => 'required|image|mimes:jpeg,png,jpg',
             'detail' => 'required|string',
-            'kategori' => 'required|string|in:processor,ram,motheboard,cooler,psu,vga',
+            'kategori' => 'required|string|in:processor,ram,motherboard,cooler,psu,vga',
         ]);
 
         $gambar = $request->file('gambar');
@@ -70,7 +70,7 @@ class ProductController extends Controller
                 'harga' => 'required|numeric',
                 'deskripsi' => 'required|string',
                 'detail' => 'required|string',
-                'kategori' => 'required|string|in:processor,ram,motheboard,cooler,psu,vga',
+                'kategori' => 'required|string|in:processor,ram,motherboard,cooler,psu,vga',
             ]);
         
             // Update the product with the validated data
@@ -84,12 +84,12 @@ class ProductController extends Controller
             if ($request->file('gambar')) {
                 // Delete the old image if it exists
                 if ($product->gambar) {
-                    Storage::disk('public')->delete('images/' . $product->gambar); // Ensure the path is correct
+                    Storage::disk('public')->delete('' . $product->gambar); // Ensure the path is correct
                 }
         
                 // Store the new image
                 $gambar = $request->file('gambar');
-                $gambarPath = $gambar->storeAs('images', $gambar->hashName(), 'public'); // Store the image in 'public/images/'
+                $gambarPath = $gambar->storeAs('', $gambar->hashName(), 'public'); // Store the image in 'public/images/'
         
                 // Update the product's image field with the new image path
                 $product->gambar = $gambar->hashName();

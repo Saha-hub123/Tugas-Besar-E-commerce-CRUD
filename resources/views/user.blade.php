@@ -35,7 +35,7 @@
 >
 
         <!-- Carousel Section -->
-        <div class="bg-indigo-600 text-white py-16 rounded-xl mt-60">
+        <div class="bg-indigo-600 text-white py-16 rounded-xl mt-36">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 class="text-3xl sm:text-4xl font-semibold mb-4">Produk Terpopuler</h1>
                 <p class="text-lg mb-8">Beberapa produk kita yang populer terjual</p>
@@ -83,7 +83,7 @@
         </div>
 
         {{-- Kategori --}}
-        <div class="mt-24">
+        <div class="mt-36">
             <h1 class="text-4xl font-semibold">Kategori Produk</h1>
             <p class="text-lg mb-8">Berikut beberapa kategori produk yang kami jual!</p> 
             <div class="flex">
@@ -244,7 +244,7 @@
         </div>
 
         <!-- Product List Section -->
-        <div class="max-w-7xl mx-auto mt-16">
+        <div class="max-w-7xl mx-auto my-36">
             <h1 class="text-3xl sm:text-4xl font-semibold">Mau nyari apa?</h1>
             <p class="text-lg mb-8">Berikut list produk yang kami jual di toko kami!</p>
 

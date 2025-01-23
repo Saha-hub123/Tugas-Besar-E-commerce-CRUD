@@ -87,7 +87,7 @@
                         @foreach (session('cart') as $id => $item)
                         <li class="flex items-center justify-between py-1">
                             <div class="flex items-center gap-2">
-                                <img src="{{ asset($item['gambar']) }}" 
+                                <img src="{{ asset('storage/' . $item['gambar']) }}" 
                                     alt="{{ $item['nama_produk'] }}" class="w-10 h-10 object-cover rounded">
                                 <div>
                                     <p class="text-sm font-medium">{{ $item['nama_produk'] }}</p>

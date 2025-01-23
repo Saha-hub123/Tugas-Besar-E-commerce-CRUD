@@ -229,7 +229,7 @@
     </div>
 
      {{-- Kategori --}}
-     <div class="mt-24 max-w-7xl mx-auto ">
+     <div class="my-36 max-w-7xl mx-auto ">
       <h1 class="text-4xl font-semibold">Kategori Produk</h1>
       <p class="text-lg mb-8">Berikut beberapa kategori produk yang kami jual!</p> 
       <div class="flex">
@@ -387,6 +387,14 @@
 
         </div>              
       </div>
+  </div>
+
+  {{-- Tentang --}}
+  <div class="mb-36">
+    <h1 class="text-4xl font-semibold max-w-7xl mx-auto">Tentang Website ini</h1>
+    <p class="text-lg font-normal max-w-7xl mx-auto mt-2">Kami ingin membuat sebuah website e-commerce yang spesifik menjual komponen-komponen komputer, agar pembeli bisa mencarinya di dalam satu website saja.
+
+      Website e-commerce isrcomputer juga bisa menjadi pilihan untuk menjadi website official bagi sebuah perusahaan berfokus pada kategori produk tertentu.</p>
   </div>
 
     <script>
