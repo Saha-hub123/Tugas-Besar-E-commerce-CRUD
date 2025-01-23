@@ -36,10 +36,10 @@
           <!-- Jika pengguna sudah login -->
           <li>
             <a
-              href="{{ url('/dashboard') }}"
+              href="{{ url('/user') }}"
               class="py-2 px-4 sm:py-3 sm:px-7 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700"
             >
-              Dashboard
+              Product
             </a>
           </li>
         @else
