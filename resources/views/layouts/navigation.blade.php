@@ -69,49 +69,116 @@
             </div>
             </form>
             <!-- search end-->
-            
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+        
+        <div class="flex items-center">
+            <!-- keranjang -->
+            <div class="relative">
+                <!-- Icon Keranjang -->
+                <a href="#" id="cartDropdownToggle">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" 
+                        alt="Keranjang" class="block h-6 w-auto text-gray-800">
+                </a>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                <!-- Dropdown Menu -->
+                <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg">
+                    <ul class="py-2 px-4">
+                        <!-- Contoh Item -->
+                        @if (session('cart') && count(session('cart')) > 0)
+                        @foreach (session('cart') as $id => $item)
+                        <li class="flex items-center justify-between py-1">
+                            <div class="flex items-center gap-2">
+                                <img src="{{ asset($item['gambar']) }}" 
+                                    alt="{{ $item['nama_produk'] }}" class="w-10 h-10 object-cover rounded">
+                                <div>
+                                    <p class="text-sm font-medium">{{ $item['nama_produk'] }}</p>
+                                    <small class="text-gray-500">Rp. {{ number_format($item['harga'], 2, ',', '.') }}</small>
+                                </div>
                             </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-                        @if(auth()->user()->role == 'admin')
-                        <x-dropdown-link :href="route('products.index')">
-                            {{ __('Admin') }}
-                        </x-dropdown-link>
-                        @endif
-                        
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                            <form action="{{ route('removeFromCart', $id) }}" method="POST">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm">Hapus</button>
+                            </form>
+                        </li>
+                        @endforeach
+                        <hr class="my-2">
+                        <!-- Tombol Checkout -->
+                        <li class="text-center">
+                            <a href="{{ route('user.checkout') }}" 
+                            class="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700">
+                            Checkout
+                            </a>
+                        </li>
+                        @else
+                            <li class="dropdown-item text-center">Keranjang kosong</li>
+                        @endif
+                    </ul>
+                </div>
             </div>
 
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const toggle = document.getElementById('cartDropdownToggle');
+                    const dropdown = document.getElementById('cartDropdown');
+
+                    toggle.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('hidden'); // Tampilkan/sembunyikan dropdown
+                    });
+
+                    // Sembunyikan dropdown jika klik di luar
+                    document.addEventListener('click', function (e) {
+                        if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+                            dropdown.classList.add('hidden');
+                        }
+                    });
+                });
+            </script>
+            <!-- keranjang end-->
+
+                <!-- Settings Dropdown -->
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ Auth::user()->name }}</div>
+
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+                            @if(auth()->user()->role == 'admin')
+                            <x-dropdown-link :href="route('products.index')">
+                                {{ __('Admin') }}
+                            </x-dropdown-link>
+                            @endif
+                            
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+        </div>
+
             <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
+            <div class="-me-2  sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -132,6 +199,16 @@
             <x-responsive-nav-link :href="route('user')" :active="request()->routeIs('user')">
                 {{ __('Products') }}
             </x-responsive-nav-link>
+            @php
+                $kategori = ['ram', 'motherboard', 'processor']; // Replace with dynamic data if available
+            @endphp
+
+            @foreach ($kategori as $ktgr)
+                <x-responsive-nav-link :href="route('user.kategori', $kategori)">
+                    {{ ucfirst($ktgr) }}
+                </x-responsive-nav-link>
+            @endforeach
+
         </div>
 
         <!-- Responsive Settings Options -->
