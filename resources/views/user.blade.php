@@ -11,22 +11,28 @@
     </div>
         @endif
 
-        <!-- Hero Section -->
-        <div class="mt-16 sm:mt-24 px-2 flex flex-col-reverse lg:flex-row items-center gap-6 justify-between">
-            <div class="-mt-16">
-                <h1 class="font-semibold text-3xl sm:text-5xl leading-tight font-inter">
-                    Lengkapi dan bangun pc <br />   
-                    Pertamamu disini!
-                </h1>
-                <p class="text-base sm:text-lg mt-4">
-                    Dapatkan part pc dengan kualitas terbaik <br />
-                    hanya di Isrcomp!
-                </p>
-            </div>
-            <div>
-                <img class="w-[500px]" src="{{ url('storage/rogmobo.png') }}" alt="">            
-            </div>
-        </div>
+<!-- Hero Section -->
+<div class="mt-16 sm:mt-24 px-4 flex flex-col-reverse lg:flex-row items-center gap-6 justify-between">
+    <!-- Bagian Teks -->
+    <div class="mt-4 text-left sm:text-center lg:text-left lg:w-1/2" style="text-align: justify;">
+        <h1 class="font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight font-inter">
+            Lengkapi dan bangun pc <br />   
+            Pertamamu disini!
+        </h1>
+        <p class="text-base sm:text-lg mt-4">
+            Dapatkan part pc dengan kualitas terbaik <br />
+            hanya di Isrcomp!
+        </p>
+    </div>
+    
+    <!-- Bagian Gambar -->
+    <div class="w-full lg:w-1/2 flex justify-center">
+        <img class="w-[300px] sm:w-[400px] md:w-[500px]" src="{{ url('storage/rogmobo.png') }}" alt="Motherboard">
+    </div>
+</div>
+
+
+>
 
         <!-- Carousel Section -->
         <div class="bg-indigo-500 text-white py-16 rounded-xl mt-24">

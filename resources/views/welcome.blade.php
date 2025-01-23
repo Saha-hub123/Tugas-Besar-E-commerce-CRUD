@@ -11,14 +11,16 @@
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
   </head>
   <body class="font-sans antialiased">
     <!-- Navbar -->
-    <nav class="flex flex-wrap justify-between items-center shadow-xl px-4 sm:px-6 lg:px-24 py-4">
+    <nav class="flex flex-wrap justify-between items-center shadow-xl px-4 sm:px-6 lg:px-24 py-4 gap-2" x-data="{ menuOpen: false }">
+      <!-- Logo -->
       <a href="{{ url('/') }}">
         <img class="h-10 sm:h-12" src="https://raw.githubusercontent.com/rdityaa/ditsa-prjt.github.io/refs/heads/main/source/logo.png" alt="logo" />
       </a>
-
+    
       <!-- Search Bar -->
       <form action="{{ route('products.search') }}" method="GET" class="flex-grow max-w-md mt-3 sm:mt-0">
         <input
@@ -29,11 +31,10 @@
           required
         />
       </form>
-
+    
       <!-- Navigation Buttons -->
-      <ul class="flex gap-3 mt-3 sm:mt-0">
+      <ul class="hidden md:flex gap-3 mt-3 sm:mt-0">
         @auth
-          <!-- Jika pengguna sudah login -->
           <li>
             <a
               href="{{ url('/user') }}"
@@ -43,7 +44,6 @@
             </a>
           </li>
         @else
-          <!-- Jika pengguna belum login -->
           <li>
             <a
               href="{{ route('login') }}"
@@ -52,39 +52,136 @@
               Login
             </a>
           </li>
-          <li>
-            @if (Route::has('register'))
+          @if (Route::has('register'))
+            <li>
               <a
                 href="{{ route('register') }}"
                 class="py-2 px-4 sm:py-3 sm:px-5 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700"
               >
                 Sign Up
               </a>
-            @endif
-          </li>
+            </li>
+          @endif
         @endauth
       </ul>
+    
+      <!-- Hamburger Menu Button -->
+      <button
+        @click="menuOpen = !menuOpen"
+        class="md:hidden py-2 px-3 rounded-lg text-indigo-600 hover:text-white hover:bg-indigo-600"
+        aria-label="Toggle menu"
+      >
+        ☰
+      </button>
+    
+      <!-- Dropdown Menu for Hamburger -->
+      <div
+        x-show="menuOpen"
+        @click.outside="menuOpen = false"
+        class="absolute right-4 top-16 bg-white shadow-lg rounded-lg py-4 px-6 w-48 z-50"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform scale-95"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-95"
+        style="display: none;"
+      >
+        <ul>
+          @auth
+            <li>
+              <a
+                href="{{ url('/user') }}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              >
+                Product
+              </a>
+            </li>
+          @else
+            <li>
+              <a
+                href="{{ route('login') }}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              >
+                Login
+              </a>
+            </li>
+            @if (Route::has('register'))
+              <li>
+                <a
+                  href="{{ route('register') }}"
+                  class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                >
+                  Sign Up
+                </a>
+              </li>
+            @endif
+          @endauth
+        </ul>
+      </div>
     </nav>
+    
+      <!-- Dropdown Menu -->
+      <div
+        x-show="menuOpen"
+        @click.outside="menuOpen = false"
+        class="absolute right-4 top-16 w-48 bg-white shadow-lg rounded-lg py-2"
+        style="display: none;"
+      >
+        <ul>
+          @auth
+            <li>
+              <a
+                href="{{ url('/user') }}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              >
+                Product
+              </a>
+            </li>
+          @else
+            <li>
+              <a
+                href="{{ route('login') }}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              >
+                Login
+              </a>
+            </li>
+            @if (Route::has('register'))
+              <li>
+                <a
+                  href="{{ route('register') }}"
+                  class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                >
+                  Sign Up
+                </a>
+              </li>
+            @endif
+          @endauth
+        </ul>
+      </div>
+    </nav>
+    
 
     <!-- Hero -->
-    <div class="max-w-7xl mx-auto sm:px-2 lg:px-2 mt-24 flex justify-between">
-      <div class="mt-16">
-          <h1 class="font-semibold text-3xl sm:text-5xl leading-tight font-inter">
+    <div class="max-w-7xl mx-auto sm:px-4 lg:px-6 mt-24 flex flex-col-reverse lg:flex-row items-center gap-6">
+      <div class="mt-16 lg:w-1/2">
+          <h1 class="font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight font-inter text-center lg:text-left">
               Lengkapi dan bangun pc <br />   
               Pertamamu disini!
           </h1>
-          <p class="text-base sm:text-lg mt-4">
+          <p class="text-base sm:text-lg mt-4 text-center lg:text-left">
               Dapatkan part pc dengan kualitas terbaik <br />
               hanya di Isrcomp!
           </p>
       </div>
-      <div>
-          <img class="w-[500px]" src="{{ url('storage/rogmobo.png') }}" alt="">            
+      <div class="lg:w-1/2 flex justify-center">
+          <img class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg" src="{{ url('storage/rogmobo.png') }}" alt="Motherboard">            
       </div>
-  </div>
+    </div>
 
     <!-- Carousel -->
-    <div class="bg-indigo-500 text-white py-10 sm:py-16 rounded-xl mt-16 sm:mt-24 px-4 sm:px-12 lg:px-24">
+    <div class="bg-indigo-600 text-white py-10 sm:py-16 rounded-xl mt-16 sm:mt-24 px-4 sm:px-12 lg:px-24">
       <div class="max-w-7xl mx-auto">
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4">Produk Terpopuler</h1>
         <p class="text-base sm:text-lg mb-8">Beberapa produk kita yang populer terjual</p>
@@ -160,5 +257,5 @@
           };
       }
   </script>
-          </body>
-      </html>
+  </body>
+</html>
