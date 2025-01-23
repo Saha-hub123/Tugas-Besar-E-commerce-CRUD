@@ -19,7 +19,7 @@
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.kategori', ['kategori' => 'Semua'])" :active="request()->routeIs('kategori')">
+                    <x-nav-link :href="route('user.kategori', ['kategori' => 'Semua'])" :active="request()->routeIs('user.kategori')">
                         {{ __('Products') }}
                     </x-nav-link>
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -203,11 +203,12 @@
                 {{ __('Products') }}
             </x-responsive-nav-link>
             @php
-                $kategori = ['ram', 'motherboard', 'processor']; // Replace with dynamic data if available
+                $kategori = ['motherboard', 'ram', 'processor', 'vga', 'psu', 'casing', 'cooler']; // Static list of categories
             @endphp
 
+            <!-- Loop kategori -->
             @foreach ($kategori as $ktgr)
-                <x-responsive-nav-link :href="route('user.kategori', $kategori)">
+                <x-responsive-nav-link :href="route('user.kategori', ['kategori' => $ktgr])">
                     {{ ucfirst($ktgr) }}
                 </x-responsive-nav-link>
             @endforeach
