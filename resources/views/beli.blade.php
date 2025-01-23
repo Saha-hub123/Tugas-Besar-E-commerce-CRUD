@@ -26,9 +26,20 @@
           <h1 class="">{{ $products->detail }}</h1>
         </div>
         <!-- Button to trigger pop-up -->
-        <button id="buyNowBtn" class="w-2/4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg mt-4 font-semibold">
+        <an class="flex items-center gap-4 mt-4">
+        <button id="buyNowBtn" class="w-1/3 bg-indigo-600 hover:bg-indigo-800 text-white px-6 py-2 rounded-lg font-semibold">
           Buy Now
         </button>
+        <!-- Form Tombol Keranjang -->
+        <form action="{{ route('addToCart', $products->id) }}" method="POST" class="w-1/6">
+            @csrf
+            <button type="submit"
+              class="w-full bg-white border border-gray-600 hover:bg-gray-300  px-4 py-2 rounded-lg font-semibold flex items-center justify-center">
+              <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" class="block h-6 w-auto"
+                alt="Keranjang">
+            </button>
+          </form>
+        </div>
       </div>
     </div>
 
