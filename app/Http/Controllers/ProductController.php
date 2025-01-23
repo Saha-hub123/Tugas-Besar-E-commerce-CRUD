@@ -38,6 +38,7 @@ class ProductController extends Controller
             'deskripsi' => 'required|string',
             'gambar' => 'required|image|mimes:jpeg,png,jpg',
             'detail' => 'required|string',
+            'kategori' => 'required|string|in:ram,motherboard,processor',
         ]);
 
         $gambar = $request->file('gambar');
@@ -49,6 +50,7 @@ class ProductController extends Controller
         'deskripsi' => $request->deskripsi,
         'gambar' => $gambar->hashName(),
         'detail' => $request->detail,
+        'kategori' => $request->kategori,
        ]);
 
        return redirect()->route('products.index')->with('success', 'Produk Berhasil Ditambahkan!');
@@ -60,33 +62,46 @@ class ProductController extends Controller
             return view('products.edit', compact('product'));
         }   
 
-    public function update(Request $request, Product $product)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'harga' => 'required|numeric',
-            'deskripsi' => 'required|string',
-            'detail' => 'required|string',
-        ]);
-
-        $product->name = $request->name;
-        $product->harga = $request->harga;
-        $product->deskripsi = $request->deskripsi;
-        $product->detail = $request->detail;
-
-        if($request->file('gambar'))
+        public function update(Request $request, Product $product)
         {
-            Storage::disk('local')->delete('public/', $product->gambar);
-            $gambar = $request->file('gambar');
-            $gambar->storeAs('', $gambar->hashName());
-            $product->gambar = $gambar->hashName();
-
-
-        $product->update();
-
-        return redirect()->route('products.index')->with('success', 'Produk Berhasil Diedt!');
+            // Validate the incoming data
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'harga' => 'required|numeric',
+                'deskripsi' => 'required|string',
+                'detail' => 'required|string',
+                'kategori' => 'required|string|in:ram,motherboard,processor',
+            ]);
+        
+            // Update the product with the validated data
+            $product->name = $request->name;
+            $product->harga = $request->harga;
+            $product->deskripsi = $request->deskripsi;
+            $product->detail = $request->detail;
+            $product->kategori = $request->kategori; // Fixed this line
+        
+            // If a new image is uploaded, handle the image storage
+            if ($request->file('gambar')) {
+                // Delete the old image if it exists
+                if ($product->gambar) {
+                    Storage::disk('public')->delete('images/' . $product->gambar); // Ensure the path is correct
+                }
+        
+                // Store the new image
+                $gambar = $request->file('gambar');
+                $gambarPath = $gambar->storeAs('images', $gambar->hashName(), 'public'); // Store the image in 'public/images/'
+        
+                // Update the product's image field with the new image path
+                $product->gambar = $gambar->hashName();
+            }
+        
+            // Save the updated product
+            $product->save(); // Save the changes to the product
+        
+            // Redirect to the products index with a success message
+            return redirect()->route('products.index')->with('success', 'Produk Berhasil Diedit!');
         }
-    }
+        
 
     public function destroy(Product $product)
     {
@@ -115,5 +130,11 @@ class ProductController extends Controller
         // Tampilkan hasil ke view
         return view('products.search-results', compact('products', 'query'));
     }
-       
+    
+    public function kategori($kategori)
+        {
+            $products = Product::where( "kategori", $kategori)->get();
+            //dd($products);
+            return view('products.kategori', compact('products'));
+        } 
 }

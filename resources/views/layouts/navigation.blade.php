@@ -16,12 +16,46 @@
                     <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link> -->
-                    <x-nav-link :href="route('user')" :active="request()->routeIs('products.index')">
+                    <x-nav-link :href="route('user')" :active="request()->routeIs('user')">
                         {{ __('Products') }}
                     </x-nav-link>
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <div class="relative">
+
+    <!-- kategori dropdown -->
+    <button id="dropdownButton" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+      Kategori
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block ml-1" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 011.414 0L10 11.414l3.293-3.707a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </button>
+    <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden">
+        <a href="{{ route('user.kategori', ['kategori' => 'motherboard']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Motherboard</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'ram']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Ram</a>
+        <a href="{{ route('user.kategori', ['kategori' => 'processor']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Prossesor</a>
+    </div>
+  </div>
+  <script>
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    dropdownButton.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close the dropdown if clicked outside
+    window.addEventListener('click', (event) => {
+      if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+    <!-- kategori dropdown -->
+            </div>
                 </div>
             </div>
             
+            <!-- search -->
             <form action="{{ route('products.search') }}" method="GET">
                 <div class="flex items-center gap-2 border-2 rounded-xl mt-2">
                 <svg class="w-6 h-6 text-gray-400 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,7 +64,8 @@
                 <input class="px-32 text-center border-none bg-transparent" type="text" name="query" placeholder="Cari produk..." required>
             </div>
             </form>
-        
+            <!-- search end-->
+            
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -86,11 +121,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <!-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> -->
 
-            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+            <x-responsive-nav-link :href="route('user')" :active="request()->routeIs('user')">
                 {{ __('Products') }}
             </x-responsive-nav-link>
         </div>
@@ -106,6 +141,12 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                @if(auth()->user()->role == 'admin')
+                <x-responsive-nav-link :href="route('products.index')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
